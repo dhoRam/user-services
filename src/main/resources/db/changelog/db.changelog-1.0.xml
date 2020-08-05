@@ -7,76 +7,70 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="1" author="Karthik">
+
+    <changeSet id="1" author="sheetal">
         <sql>
-            CREATE TABLE user (
+            CREATE TABLE Technology (
+            id BIGINT NOT NULL AUTO_INCREMENT,
+            technology VARCHAR(255) NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            Status VARCHAR(255) NOT NULL,
+            Fees BIGINT,
+            CONSTRAINT PK_id PRIMARY KEY (id)
+            );
+        </sql>
+        <rollback>
+            DROP TABLE Technology;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2" author="sheetal">
+        <sql>
+        INSERT INTO Technology (technology, description, Status,Fees) values ('AI', 'Combine the power of Data Science, Machine Learning and Deep Learning to create powerful AI for Real-World applications!', 'Not Started','500');
+        INSERT INTO Technology (technology, description, Status,Fees) values ('PYTHON', 'This Python For Beginners Course Teaches You The Python Language Fast. Includes Python Online Training With Python 3', 'Not Started','1000');
+        INSERT INTO Technology (technology, description, Status,Fees) values ('MEAN', 'Learn how to connect your Angular Frontend to a NodeJS and Express and MongoDB Backend by building a real Application', 'Not Started','2000');
+        INSERT INTO Technology (technology, description, Status,Fees) values ('ANGULAR', 'Master Angular 10 and build awesome, reactive web apps with the successor of Angular.js', 'Not Started','4000');
+        INSERT INTO Technology (technology, description, Status,Fees) values ('JAVA-101', 'Includes Java core', 'Not Started','500');
+        INSERT INTO Technology (technology, description, Status,Fees) values ('JAVA-102', 'Includes Java core2', 'Not Started','1000');
+        INSERT INTO Technology (technology, description, Status,Fees) values ('JAVA-103', 'Java Advance', 'Not Started','2000');
+        INSERT INTO Technology (technology, description, Status,Fees) values ('JAVA-104', 'Java Advance', 'Not Started','4000');
+        <rollback>
+            TRUNCATE TABLE Technology;
+        </rollback>
+    </changeSet>
+
+
+    <changeSet id="3" author="sheetal">
+        <sql>
+            CREATE TABLE User (
             id BIGINT NOT NULL AUTO_INCREMENT,
             email VARCHAR(255) NOT NULL,
             name VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
             role VARCHAR(255) NOT NULL,
-            technology VARCHAR(255),
+            technology_id VARCHAR(255),
+            status INTEGER,
             CONSTRAINT PK_id PRIMARY KEY (id)
             );
         </sql>
         <rollback>
-            DROP TABLE user;
+            DROP TABLE User;
         </rollback>
     </changeSet>
-    <changeSet id="2" author="Karthik">
+
+    <changeSet id="4" author="sheetal">
         <sql>
-            CREATE TABLE course (
-            id BIGINT NOT NULL AUTO_INCREMENT,
-            name VARCHAR(255) NOT NULL,
-            mentor_id BIGINT NOT NULL,
-            CONSTRAINT PK_id PRIMARY KEY (id),
-            CONSTRAINT fk_user_course FOREIGN KEY (mentor_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
-            );
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('sheetal@lntinfotech.com', 'Sheetal', 'test','user',1,0);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('DJ@lntinfotech.com', 'DJ', 'test','mentor',1,0);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('Karthik@lntinfotech.com', 'Karthik', 'test','mentor',1,0);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('Amey@lntinfotech.com', 'Amey', 'test','mentor',1,1);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('Alok@lntinfotech.com', 'Alok', 'test','mentor',1,0);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('Swati@lntinfotech.com', 'Swati', 'test','user',1,1);
         </sql>
         <rollback>
-            DROP TABLE course;
+            TRUNCATE TABLE User;
         </rollback>
     </changeSet>
 
-    <changeSet id="3" author="Karthik">
-        <sql>
-            CREATE TABLE course_trainee (
-            id BIGINT NOT NULL AUTO_INCREMENT,
-            trainee_id BIGINT NOT NULL,
-            course_id BIGINT NOT NULL,
-            CONSTRAINT PK_id PRIMARY KEY (id),
-            CONSTRAINT fk_trainee_user FOREIGN KEY (trainee_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
-            CONSTRAINT fk_course_cs FOREIGN KEY (course_id) REFERENCES course (id) ON DELETE CASCADE ON UPDATE CASCADE,
-            CONSTRAINT uq_cs UNIQUE (trainee_id, course_id)
-        );
-        </sql>
-        <rollback>
-            DROP TABLE course_trainee
-        </rollback>
-    </changeSet>
-
-    <changeSet id="4" author="Karthik">
-        <sql>
-            INSERT INTO user (username, name, password, role) values ("user1", "user Tom", "test", "MENTOR");
-            INSERT INTO user (username, name, password, role) values ("user2", "user Adam", "test", "MENTOR");
-            INSERT INTO user (username, name, password, role) values ("user3", "user Jon", "test", "MENTOR");
-        </sql>
-        <rollback>
-            TRUNCATE TABLE user;
-        </rollback>
-    </changeSet>
-
-    <changeSet id="5" author="Karthik">
-        <sql>
-            INSERT INTO course (name, mentor_id) values ("JAVA-101", (select id from user where username = "user1"));
-            INSERT INTO course (name, mentor_id) values ("JAVA-102", (select id from user where username = "user2"));
-            INSERT INTO course (name, mentor_id) values ("ANGULAR-101", (select id from user where username = "user3"));
-        </sql>
-        <rollback>
-            TRUNCATE TABLE course;
-        </rollback>
-
-
-    </changeSet>
 
 </databaseChangeLog>

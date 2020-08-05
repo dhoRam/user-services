@@ -37,6 +37,7 @@ public class UserRegistrationService implements UserDetailsService {
 			newUser.setName(user.getName());
 			newUser.setRole(user.getRole());
 			newUser.setTechnology(user.getTechnology());
+			newUser.setStatus("0");
 			return userDao.save(newUser);
 		}else {
 			throw new UsernameNotFoundException("Email already exists : " + user.getEmail());

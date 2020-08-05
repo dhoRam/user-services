@@ -18,8 +18,10 @@ public class UserDao {
     private String password;
     @Column
     private String role;
-    @Column
+    @Column(name="technology_id")
     private String technology;
+    @Column
+    private String status;
 
     public String getEmail() {
         return email;
@@ -60,5 +62,11 @@ public class UserDao {
 		this.technology = technology;
 	}
 
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
 

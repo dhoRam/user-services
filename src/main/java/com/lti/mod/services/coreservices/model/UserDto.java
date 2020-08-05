@@ -6,6 +6,7 @@ public class UserDto {
     private String password;
     private String role;
     private String technology;
+	private String Status;
 
     public String getEmail() {
         return email;
@@ -45,5 +46,13 @@ public class UserDto {
 
 	public void setTechnology(String technology) {
 		this.technology = technology;
+	}
+
+	public String getStatus() {
+		return Status;
+	}
+
+	public void setStatus(String status) {
+		Status = status;
 	}
 }

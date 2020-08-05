@@ -17,4 +17,5 @@ public class UserController {
         System.out.println("Saved ##########");
         return ResponseEntity.ok(userDetailsService.save(user));
     }
+
 }
